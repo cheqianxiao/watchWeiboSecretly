@@ -40,7 +40,6 @@ var req1 = https.get({
         });
         password = key.encrypt([servertime, nonce].join("\t") + "\n" + password)
         password = password.toString('hex')
-        console.log(password)
         let postData = {
                 'entry': 'account',
                 'gateway': '1',
@@ -65,10 +64,12 @@ var req1 = https.get({
                 'returntype': 'TEXT'
             }
             postData = querystring.stringify(postData)
+        //截取该请求  
         let req2 = https.request({
             hostname: "login.sina.com.cn",
+            // host: "127.0.0.1",
+            // port: 8880,
             method: 'POST',
-            proxy:'http://192.168.31.161:8787',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Content-Length': postData.length
@@ -100,6 +101,8 @@ req1.on('error', function(err) {
 });
 req1.end();
 return
+
+
 //source code form 'http://login.sina.com.cn/js/sso/ssologin.js'
 if ((me.loginType & rsa) && me.servertime && sinaSSOEncoder && sinaSSOEncoder.RSAKey) {
     //加密
